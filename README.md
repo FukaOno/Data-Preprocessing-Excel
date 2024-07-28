@@ -1,0 +1,3 @@
+- Developed a comprehensive data processing pipeline to clean, transform, and analyze municipal population data from Japan
+- The project involved handling Japanese and English mixed text, managing missing data, and extracting meaningful insights such as population trends and municipal classifications
+- Utilized Python with pandas and BeautifulSoup libraries for data extraction, transformation, and loading (ETL) tasks, ultimately producing clean and structured datasets for future analysis and visualization
