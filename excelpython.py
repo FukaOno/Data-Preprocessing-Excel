@@ -13,7 +13,7 @@ print(length)
 #Change the name of columns to display　in a universal manner
 #Instead of Japanese era name, use numbers
 #Instead of Japanese, use English
-df_data.columns = ['City_name', '2020-03-01_population', '2020-02-01_population',  '2020-02-01_number_of_increase/decrease','2020-02-01-number_of_increase/decrease', '2019-02-01_population', '2019-02-01_number_of_increase/decrease', '2019-02-01_number_of_increase/decrease']
+df_data.columns = ['City_name', '2020-03-01_population', '2020-02-01_population',  '2020-02-01_number_of_increase/decrease','2020-02-01_rate_of_increase/decrease', '2019-02-01_population', '2019-02-01_number_of_increase/decrease', '2019-02-01_rate_of_increase/decrease']
 
 print(df_data.columns)
 
@@ -39,7 +39,7 @@ print(df_data[df_data['2020-03-01_population'].isnull()])
 #Pull out only numbers that are not NaN 
 df_data = df_data[~df_data['2020-03-01_population'].isnull()]
 
-rint(df_data.info())
+print(df_data.info())
 
 #Save the updated data as new csv file
 df_data.to_csv(path_or_buf='pop202003_version2.csv',index=False)
@@ -123,3 +123,34 @@ df_data = df_data.drop(index=[0,1,13])
 df_data.to_csv(path_or_buf='pop202003_version5.csv',index=False)
 
 df_data = pd.read_csv('pop202003_version5.csv')
+
+#Since population and increase/decrease never have decimal point
+#Change the data type into integer
+
+df_data = df_data.astype({'2020-03-01_population': int,'2020-02-01_population': int,'2020-02-01_number_of_increase/decrease': int,'2019-02-01_population': int,'2019-02-01_number_of_increase/decrease': int})
+
+#Reorganize the data columns
+df_data = df_data[['Municipal_classification','City_name','市町村名_読み', '2020-03-01_population', '2020-02-01_population', '2020-02-01_number_of_increase/decrease','2020-02-01_rate_of_increase/decrease', '2019-02-01_population', '2019-02-01_number_of_increase/decrease', '2019-02-01_rate_of_increase/decrease' ]]
+
+print(df_data.columns)
+
+#Save the updated Data to new csv file
+df_data.to_csv(path_or_buf='pop202003_version6.csv',index=False)
+
+#Visualize the Data
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+
+plt.style.use('ggplot')
+
+df_data = pd.read_csv('pop202003_version6.csv')
+
+#First, plot the number of data
+sns.countplot(y=df_data['Municipal_classification'])
+plt.show()
+
+#Plot each city, town, and village population 
+sns.stripplot(x="Municipal_classification", y="2020-03-01_population", data=df_data)
+plt.show()
+#It is clear that Village is the highest population, and City and Town are similar number
