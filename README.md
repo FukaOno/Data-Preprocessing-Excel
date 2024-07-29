@@ -1,4 +1,4 @@
-- Conducted data cleaning, processing, and visualization on population data to facilitate analysis and derive insights.
+- Conducted data cleaning, processing, and visualization on population data to facilitate analysis and derive insights
 
 Key Achievements:
    1. Data Cleaning and Preparation:
